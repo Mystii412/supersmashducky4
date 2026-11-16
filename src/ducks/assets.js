@@ -58,7 +58,7 @@ export function createDuckAssets({ sheets, spriteSheet, colors, escapeHtml }) {
       .some((flag) => flag === true || flag === 'true');
     const hasTestTag = Array.isArray(rawDuck.tags)
       && rawDuck.tags.some((tag) => String(tag).toLowerCase() === 'test');
-    const hasTestName = /(^|[\s_-])test(?:$|[\s_-]|duck|\d)/i.test(
+    const hasTestName = /(^|[\s_-])test(?:ing)?(?:$|[\s_-]|duck|\d)/i.test(
       `${name} ${rawDuck._id || ''} ${rawDuck.id || ''}`,
     );
     return hasTestFlag || hasTestTag || hasTestName;

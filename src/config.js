@@ -49,7 +49,7 @@ export const STAGES = [
   },
   {
     id: 'ects-arena', name: 'ECTS Arena', tag: 'FLOATING CLASSROOM', width: 1200, floorY: 350,
-    background: 'assets/stages/ects-arena.svg', backgroundMode: 'cover', hidePlatforms: true,
+    background: 'myPhotos/classroom.png', backgroundMode: 'cover', hidePlatforms: true,
     sky: ['#46265b', '#754b96', '#211c3a'], top: '#f3a6ff',
     platforms: [
       { x: 110, w: 180, y: 205 }, { x: 670, w: 180, y: 205 },
@@ -198,11 +198,11 @@ export const PHYSICS = {
 export const COMBAT = {
   baseKnockback: 4,
   attackDamageKnockback: 0.5,
-  damagePercentKnockback: 0.1,
-  maxKnockback: 28,
+  damagePercentKnockback: 0.24,
+  maxKnockback: 80,
   maximumDamagePercent: 999,
-  horizontalLaunchScale: 0.38,
-  maxHorizontalLaunchBonus: 12,
+  horizontalLaunchScale: 0.48,
+  maxHorizontalLaunchBonus: 16,
   upwardLaunchScale: 0.22,
   maxUpwardLaunchBonus: 9,
   downwardLaunchScale: 0.32,

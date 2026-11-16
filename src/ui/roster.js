@@ -107,7 +107,8 @@ export function createRosterUI({
       focus: 'Each Focus point adds 0.14 focus gained per hit. It also adds 1/30 run speed, up to +1.2.',
     };
     const description = descriptions[statName] || '';
-    return `<div class="stat-row"><div class="stat-label"><span title="${escapeHtml(description)}">${label} <i class="stat-info" title="${escapeHtml(description)}" aria-label="${escapeHtml(description)}">ⓘ</i></span><b>${escapeHtml(displayedValue)}</b></div><div class="meter"><i style="width:${width}%"></i></div></div>`;
+    const meterClass = statName === 'health' || statName === 'focus' ? `meter-${statName}` : '';
+    return `<div class="stat-row"><div class="stat-label"><span title="${escapeHtml(description)}">${label} <i class="stat-info" title="${escapeHtml(description)}" aria-label="${escapeHtml(description)}">ⓘ</i></span><b>${escapeHtml(displayedValue)}</b></div><div class="meter ${meterClass}"><i style="width:${width}%"></i></div></div>`;
   }
 
   function renderPlayers() {

@@ -596,14 +596,18 @@ function renderBattleHud() {
   const stamina = game.rulesMode === 'stamina';
   querySelector('#battleHud').innerHTML = game.entities.map((fighter) => {
     const duck = ducks.find((candidate) => candidate.id === fighter.duckId);
-    const damage = Math.max(0, fighter.damage || 0);
-    const hp = Math.max(0, 100 - damage);
-    const bar = stamina ? hp : Math.min(100, damage);
+    const damage = Number.isFinite(fighter.damage) ? Math.max(0, fighter.damage) : 0;
+    const hp = Math.max(0, 100 - Math.min(100, damage));
+    const focus = Number.isFinite(fighter.focus) ? Math.max(0, Math.min(100, fighter.focus)) : 0;
+    const bar = stamina ? 100 - hp : Math.min(100, damage);
     const itemNames = { blaster: 'Blaster · attack to fire', bomb: 'Bomb · attack to throw', banana: 'Banana · attack to throw', isaac: 'Isaac · attack to summon' };
     const itemInfo = fighter.weapon ? `<div class="item-equipped">${itemNames[fighter.weapon.type] || 'Item · attack to use'} (${fighter.weapon.ammo})</div>` : '';
     const stocks = stamina ? '' : `<div class="stock-dots">${Array.from({ length: fighter.maxStocks || 3 }, (_, index) => `<i class="${index >= fighter.stocks ? 'lost' : ''}"></i>`).join('')}</div>`;
     const meterLabel = stamina ? `${Math.ceil(hp)} HP` : `${Math.round(damage)}%`;
-    return `<div class="battle-fighter ${fighter.ultimateReady ? 'ultimate-ready' : ''}" style="--pcolor:${fighter.color};--damage-heat:${bar}%"><img class="battle-avatar" src="${spriteCache.get(fighter.duckId) || ''}" alt=""><div class="battle-meta"><div class="battle-player">P${fighter.slot} · ${escapeHtml(fighter.name)}${fighter.id === local?.id ? ' (YOU)' : ''}</div><div class="battle-duck">${escapeHtml(duck?.name || 'Duck')}</div>${itemInfo}${fighter.ultimateReady ? '<div class="ultimate-badge">FACE + SPECIAL</div>' : ''}${stocks}<div class="focus-track"><i style="width:${Math.max(0, fighter.focus || 0)}%"></i></div><div class="guard-track"><i style="width:${Math.max(0, fighter.guard || 0)}%"></i></div><div class="damage-track"><i></i></div></div><div class="battle-damage">${meterLabel}<small>${stamina ? 'STAMINA' : `FOCUS ${Math.round(fighter.focus)}%`}</small></div></div>`;
+    const mainMeter = stamina
+      ? `<div class="health-track"><i style="width:${hp}%"></i></div>`
+      : '<div class="damage-track"><i></i></div>';
+    return `<div class="battle-fighter ${fighter.ultimateReady ? 'ultimate-ready' : ''}" style="--pcolor:${fighter.color};--damage-heat:${bar}%"><img class="battle-avatar" src="${spriteCache.get(fighter.duckId) || ''}" alt=""><div class="battle-meta"><div class="battle-player">P${fighter.slot} · ${escapeHtml(fighter.name)}${fighter.id === local?.id ? ' (YOU)' : ''}</div><div class="battle-duck">${escapeHtml(duck?.name || 'Duck')}</div>${itemInfo}${fighter.ultimateReady ? '<div class="ultimate-badge">FACE + SPECIAL</div>' : ''}${stocks}<div class="focus-caption"><span>FOCUS</span><b>${Math.round(focus)}%</b></div><div class="focus-track"><i style="width:${focus}%"></i></div><div class="guard-track"><i style="width:${Math.max(0, fighter.guard || 0)}%"></i></div>${mainMeter}</div><div class="battle-damage">${meterLabel}<small>${stamina ? 'HEALTH' : 'DAMAGE'}</small></div></div>`;
   }).join('');
   if (game.rulesMode === 'timed' && game.timeRemaining != null && game.active && !game.finished) {
     const seconds = Math.ceil(game.timeRemaining / 60);

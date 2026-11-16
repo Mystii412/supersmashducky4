@@ -610,6 +610,19 @@ button {
   background:linear-gradient(90deg,#45b7d0,#f9c455);
   border-radius:8px
 }
+.stats .meter-health,.stats .meter-focus {
+  height:10px;
+  border:1px solid #ffffff55;
+  box-shadow:inset 0 1px 3px #000a,0 0 8px #ffffff22
+}
+.stats .meter-health i {
+  background:linear-gradient(90deg,#27bd72,#b7f77a);
+  box-shadow:0 0 8px #70f2a5aa
+}
+.stats .meter-focus i {
+  background:linear-gradient(90deg,#30aaff,#ffe36b);
+  box-shadow:0 0 8px #ffe36baa
+}
 .detail-placeholder {
   margin:auto;
   text-align:center;
@@ -731,24 +744,27 @@ button {
 }
 .battle-hud {
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:8px;
-  margin:0 0 11px
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin:12px 0 15px
 }
 .battle-fighter {
   min-width:0;
-  background:#202c37;
-  border:1px solid #3a4855;
-  border-top:3px solid var(--pcolor);
-  border-radius:8px;
-  padding:8px 10px;
-  display:flex;
+  min-height:130px;
+  background:linear-gradient(145deg,#202c37,#141f2a 75%);
+  border:1px solid color-mix(in srgb,var(--pcolor) 72%,#ffffff);
+  border-top:5px solid var(--pcolor);
+  border-radius:12px;
+  padding:14px;
+  display:grid;
+  grid-template-columns:58px minmax(0,1fr) 92px;
   align-items:center;
-  gap:9px
+  gap:12px;
+  box-shadow:inset 0 1px #ffffff1c,0 8px 24px #03070db3,0 0 15px color-mix(in srgb,var(--pcolor) 23%,transparent)
 }
 .battle-avatar {
-  width:43px;
-  height:38px;
+  width:58px;
+  height:58px;
   object-fit:contain;
   flex:none
 }
@@ -782,17 +798,22 @@ button {
   text-transform:uppercase
 }
 .battle-damage {
-  font:900 23px/.9 'Barlow Condensed',sans-serif;
+  min-width:86px;
+  padding:9px 6px;
+  border-left:1px solid #ffffff26;
+  font:900 clamp(31px,4vw,46px)/.82 'Barlow Condensed',sans-serif;
   text-align:right;
   color:color-mix(in srgb, #ff493d var(--damage-heat), #f4f6ed);
-  text-shadow:0 0 8px #ff493d66
+  text-shadow:0 0 10px #ff493d77,0 2px #090e16;
+  filter:drop-shadow(0 0 9px #ff493d44)
 }
 .damage-track {
-  height:4px;
-  margin-top:5px;
+  height:12px;
+  margin-top:7px;
   overflow:hidden;
   border-radius:5px;
-  background:#263642
+  background:#263642;
+  box-shadow:inset 0 1px 2px #000a,0 0 7px #ffffff1c
 }
 .damage-track i {
   display:block;
@@ -808,14 +829,45 @@ button {
   color:#9eabb5;
   margin-top:3px
 }
+.focus-caption {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:8px;
+  color:#ffe58c;
+  font:900 10px 'DM Sans',sans-serif;
+  letter-spacing:.13em;
+  text-shadow:0 0 10px #ffda5e99
+}
+.focus-caption b {
+  color:#fff7ce;
+  font-size:11px
+}
+.health-track {
+  height:13px;
+  margin-top:7px;
+  overflow:hidden;
+  border:1px solid #bdf4c577;
+  border-radius:6px;
+  background:#14261f;
+  box-shadow:inset 0 1px 3px #000a,0 0 9px #58e99855
+}
+.health-track i {
+  display:block;
+  width:100%;
+  height:100%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,#16b76b,#aaf76c);
+  box-shadow:0 0 8px #67f3a5
+}
 .stock-dots {
   display:flex;
-  gap:3px;
-  margin-top:5px
+  gap:5px;
+  margin-top:7px
 }
 .stock-dots i {
-  width:7px;
-  height:7px;
+  width:10px;
+  height:10px;
   border-radius:50%;
   background:#f7c451;
   box-shadow:0 0 4px #f7c45166
@@ -904,13 +956,21 @@ button {
   background:#0d1720;
   overflow:hidden
 }
+.focus-track {
+  height:12px;
+  margin-top:3px;
+  border:1px solid #ffe792bb;
+  background:#18243b;
+  box-shadow:inset 0 1px 3px #000a,0 0 14px #ffd95c77
+}
 .focus-track i,.guard-track i {
   display:block;
   height:100%;
   transition:width .15s
 }
 .focus-track i {
-  background:linear-gradient(90deg,#f3b832,#ffe89b)
+  background:linear-gradient(90deg,#2e8cff,#8d69ff,#ffe06e);
+  box-shadow:0 0 9px #ffe06e
 }
 .guard-track i {
   background:linear-gradient(90deg,#62c7e8,#c0f7ff)
@@ -1770,14 +1830,21 @@ button {
   }
   .battle-hud {
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:5px
+    gap:8px
   }
   .battle-fighter {
-    padding:6px
+    min-height:112px;
+    grid-template-columns:44px minmax(0,1fr) 72px;
+    gap:8px;
+    padding:9px
   }
   .battle-avatar {
-    width:33px;
-    height:32px
+    width:44px;
+    height:44px
+  }
+  .battle-damage {
+    min-width:66px;
+    font-size:clamp(26px,7vw,36px)
   }
   .battle-footer {
     align-items:flex-start;
@@ -1833,6 +1900,11 @@ button {
   }
   .cutscene-copy span {
     font-size:11px
+  }
+}
+@media(max-width:420px) {
+  .battle-hud {
+    grid-template-columns:1fr
   }
 }
 @media(max-width:650px) {
